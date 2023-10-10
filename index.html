@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Emin's car shop</title>
+    <!-- Import Styles -->
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <!-- Import Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Import Js -->
+    <script src="./main.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="cart">
+        <p>Cart({{ product.cart }})</p>
+      </div>
+      <div class="product">
+        <div class="product-image">
+          <img v-bind:src="image" />
+        </div>
+        <div class="product-info">
+          <h1>{{ product.name }}</h1>
+          <p v-if="product.inStock">In Stock</p>
+          <p v-else>Out of Stock</p>
+          <ul>
+            <li v-for="detail in product.details">{{ detail.detail }}</li>
+          </ul>
+          <div
+            v-for="(variant, index) in product.variants"
+            :key="variant.id"
+            class="color-circle"
+            :style="{ backgroundColor: variant.color }"
+            @mouseover="updateImage(index)"
+          ></div>
+          <p class="price">{{ price }}</p>
+          <button
+            class="button"
+            v-on:click="addToCart"
+            :disabled="!product.inStock"
+            :class="{ disabledButton: !product.inStock }"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>  
+    </div>
+
+    <script>
+      const mountedApp = app.mount('#app');
+    </script>
+  </body>
+</html>
